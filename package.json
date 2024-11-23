@@ -14,6 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@tanstack/router-devtools": "^1.81.7",
     "@tanstack/router-plugin": "^1.81.6",
     "react": "^18.3.1",

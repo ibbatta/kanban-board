@@ -1,20 +1,16 @@
 import { create } from "zustand";
 
-import { StateType, TabsType } from "@configs/types";
+import { StateType, BoardStoreType } from "@configs/types";
 import { STATUS } from "@configs/constants";
 
+import { FAKE_DATA } from "@configs/constants";
+
 export const useStateStore = create<StateType>((set) => ({
-  states: [STATUS.TODO, STATUS.PROGRESS, STATUS.DONE],
+  states: [STATUS.BACKLOG, STATUS.PROGRESS, STATUS.DONE],
   activeTab: null,
 }));
 
-export const useTabStore = create<TabsType>((set) => ({
-  id: 0,
-  cards: [],
-  isActive: false,
-  addCard: (data) => {
-    set((state) => ({
-      cards: [...state.cards, data],
-    }));
-  },
+export const useBoardStore = create<BoardStoreType>((set) => ({
+  cards: FAKE_DATA,
+  setCards: (card) => set((state) => ({ cards: [...state.cards, card] })),
 }));
