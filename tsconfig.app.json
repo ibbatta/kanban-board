@@ -17,10 +17,10 @@
 
     "baseUrl": "./src/modules",
     "paths": {
-      "@components/*": ["Core/components/*"],
-      "@configs/*": ["Core/configs/*"],
-      "@states/*": ["Core/states/*"],
-      "@utils/*": ["Core/utils/*"]
+      "$components/*": ["Core/components/*"],
+      "$configs/*": ["Core/configs/*"],
+      "$states/*": ["Core/states/*"],
+      "$utils/*": ["Core/utils/*"]
     },
 
     /* Linting */
