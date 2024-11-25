@@ -1,11 +1,5 @@
-import Card from "$components/Card";
-
 function Core() {
-  return (
-    <div>
-      <Card />
-    </div>
-  );
+  return <div>asd</div>;
 }
 
 export default Core;
