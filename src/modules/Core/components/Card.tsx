@@ -1,4 +1,4 @@
-import { XMarkIcon, FlagIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { CardType } from "$utils/types";
 
@@ -27,10 +27,7 @@ function Card({ task, footerContent }: CardType) {
         <p>{description}</p>
       </div>
       <footer className="flex items-start justify-between border-t border-dashed p-2 text-xs text-gray-500">
-        <div className="flex items-center gap-2">
-          <FlagIcon width={12} height={12} />
-          <PriorityBadge level={priority} />
-        </div>
+        <PriorityBadge level={priority} />
         {footerContent && <span>{footerContent}</span>}
       </footer>
     </article>
