@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 
 export type StatusType = "BACKLOG" | "PROGRESS" | "DONE";
+export type LevelType = 1 | 2 | 3 | 4 | 5;
 
 export type PriorityType = {
-  level: 1 | 2 | 3 | 4 | 5;
-  text: string;
+  level: LevelType;
 };
 
 export type TaskType = {
   id: number;
   title: string;
-  priority: Pick<PriorityType, "level">;
+  priority: LevelType;
   description: string;
   status: StatusType;
 };

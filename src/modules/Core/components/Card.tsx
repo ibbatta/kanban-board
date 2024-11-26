@@ -1,24 +1,8 @@
 import { XMarkIcon, FlagIcon } from "@heroicons/react/24/outline";
+
 import { CardType } from "$utils/types";
 
 import PriorityBadge from "$components/PriorityBadge";
-
-const pickPriorityIcon = (priority: number) => {
-  switch (priority) {
-    case 1:
-      return <PriorityBadge level={priority} text="high" />;
-    case 2:
-      return <PriorityBadge level={priority} text="medium" />;
-    case 3:
-      return <PriorityBadge level={priority} text="default" />;
-    case 4:
-      return <PriorityBadge level={priority} text="low" />;
-    case 5:
-      return <PriorityBadge level={priority} text="ground" />;
-    default:
-      return <PriorityBadge level={3} text="default" />;
-  }
-};
 
 function Card({ task, footerContent }: CardType) {
   const { id, title, description, priority = 3 } = task;
@@ -32,8 +16,7 @@ function Card({ task, footerContent }: CardType) {
         <h4 className="text-base font-semibold">{title}</h4>
         <button
           className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             alert(`Card eliminata: ${id}`);
           }}
         >
@@ -46,7 +29,7 @@ function Card({ task, footerContent }: CardType) {
       <footer className="flex items-start justify-between border-t border-dashed p-2 text-xs text-gray-500">
         <div className="flex items-center gap-2">
           <FlagIcon width={12} height={12} />
-          <span>{pickPriorityIcon(priority)}</span>
+          <PriorityBadge level={priority} />
         </div>
         {footerContent && <span>{footerContent}</span>}
       </footer>
