@@ -2,11 +2,13 @@ import { PriorityType } from "$utils/types";
 import { PRIORITY } from "$configs/constants";
 
 function PriorityBadge({ level }: PriorityType) {
+  const [dotColor, bgColor, textColor, text] = PRIORITY[level];
   return (
     <span
-      className={`me-2 rounded border border-${PRIORITY[level][0]}-700/30 bg-${PRIORITY[level][0]}-100 px-2.5 py-0.5 text-xs font-medium text-${PRIORITY[level][0]}-600/70`}
+      className={`inline-flex items-center gap-x-1.5 rounded-full ${bgColor} px-3 py-1.5 text-xs font-medium ${textColor}`}
     >
-      {PRIORITY[level][1]}
+      <span className={`inline-block size-1.5 rounded-full ${dotColor}`}></span>
+      {text}
     </span>
   );
 }

@@ -20,7 +20,7 @@ const fakeData: TaskType[] = [
   {
     id: 3,
     title: "Task card title",
-    priority: 2,
+    priority: 3,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "BACKLOG",
@@ -28,7 +28,7 @@ const fakeData: TaskType[] = [
   {
     id: 4,
     title: "Task card title",
-    priority: 3,
+    priority: 2,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "PROGRESS",
