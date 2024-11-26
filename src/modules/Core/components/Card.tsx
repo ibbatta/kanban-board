@@ -1,7 +1,9 @@
-import { TrashIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
-import { CardType } from "$configs/types";
+import { TrashIcon, FlagIcon } from "@heroicons/react/24/outline";
+import { CardType } from "$utils/types";
 
-function Card({ id, title, date, description, FooterContent }: CardType) {
+function Card({ task, footerContent }: CardType) {
+  const { id, title, description, level } = task;
+
   return (
     <article className="rounded border bg-gray-50">
       <header className="flex items-center justify-between border-b p-2">
@@ -18,10 +20,10 @@ function Card({ id, title, date, description, FooterContent }: CardType) {
       </div>
       <footer className="flex items-start justify-between border-t border-dashed p-2 text-xs text-gray-500">
         <div className="flex items-center gap-2">
-          <CalendarDaysIcon width={12} height={12} />
-          <span className="font-thin">{date}</span>
+          <FlagIcon width={12} height={12} />
+          <span>{level}</span>
         </div>
-        {FooterContent && <span>{FooterContent}</span>}
+        {footerContent && <span>{footerContent}</span>}
       </footer>
     </article>
   );
