@@ -5,12 +5,18 @@ function Card({ task, footerContent }: CardType) {
   const { id, title, description, level } = task;
 
   return (
-    <article className="rounded border bg-gray-50">
+    <article
+      draggable="true"
+      className="cursor-grab rounded border bg-white active:cursor-grabbing"
+    >
       <header className="flex items-center justify-between border-b p-2">
         <h4 className="text-base font-semibold">{title}</h4>
         <button
           className="rounded bg-red-100 p-2 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
-          onClick={() => alert(`Card eliminata: ${id}`)}
+          onClick={(e) => {
+            e.preventDefault();
+            alert(`Card eliminata: ${id}`);
+          }}
         >
           <TrashIcon width={16} height={16} />
         </button>
