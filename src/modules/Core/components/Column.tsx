@@ -17,7 +17,7 @@ function Column({ id, title, tasks }: ColumnType) {
           return <Card key={task.id} task={task} />;
         })}
       </div>
-      <div className="mt-6 flex justify-center">
+      <div className="my-6 flex justify-center">
         <AddTask columnId={id} />
       </div>
     </div>

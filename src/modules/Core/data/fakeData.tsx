@@ -25,6 +25,7 @@ const fakeData: TaskType[] = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "BACKLOG",
   },
+
   {
     id: 4,
     title: "Task card title",
