@@ -4,13 +4,16 @@ import { AddTaskType } from "$utils/types";
 
 function AddTask({ columnId }: AddTaskType) {
   return (
-    <div className="mt-2 flex cursor-pointer items-center gap-1 rounded border border-dashed border-gray-300 p-2 text-gray-300" onClick={(e) => {
-      e.preventDefault()
-      alert(`Add task in column (${columnId})`)
-    }}>
-      <PlusCircleIcon width={16} height={16} />
-      <span className="text-xs uppercase">Add task</span>
-    </div>
+    <span
+      className="flex cursor-pointer items-center gap-1 rounded-full border border-dashed border-gray-400 bg-slate-100 px-3 py-1 text-gray-400 hover:shadow-md"
+      onClick={(e) => {
+        e.preventDefault();
+        alert(`Add task in column (${columnId})`);
+      }}
+    >
+      <PlusCircleIcon width={20} height={20} />
+      <span className="text-xs font-normal uppercase">Add task</span>
+    </span>
   );
 }
 
