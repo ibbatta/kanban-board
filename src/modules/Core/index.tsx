@@ -11,7 +11,14 @@ function Core() {
       {columnsArray.map(([colKey, colName]) => {
         const filteredTasks = fakeData.filter((task) => task.status === colKey);
 
-        return <Column key={colKey} title={colName} tasks={filteredTasks} />;
+        return (
+          <Column
+            key={colKey}
+            id={colKey}
+            title={colName}
+            tasks={filteredTasks}
+          />
+        );
       })}
     </div>
   );

@@ -21,6 +21,11 @@ export type CardType = {
 };
 
 export type ColumnType = {
+  id: number | string;
   title: string;
   tasks: TaskType[];
+};
+
+export type AddTaskType = {
+  columnId: number | string;
 };
