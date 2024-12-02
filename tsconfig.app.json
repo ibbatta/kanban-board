@@ -15,6 +15,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    "baseUrl": "./src/modules",
+    "paths": {
+      "$components/*": ["Core/components/*"],
+      "$configs/*": ["Core/configs/*"],
+      "$states/*": ["Core/states/*"],
+      "$utils/*": ["Core/utils/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -22,9 +30,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"],
-  "baseUrl": ".",
-  "paths": {
-    "@/*": ["./src/*"]
-  }
+  "include": ["src"]
 }
