@@ -1,5 +1,7 @@
 import { LevelType, StatusType } from "../utils/types";
 
+export const STORAGE_DATA_NAME = "kanban-tasks";
+
 export const STATUS: Record<StatusType, string> = {
   BACKLOG: "To Do",
   PROGRESS: "In progress",

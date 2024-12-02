@@ -1,8 +1,13 @@
+import { STORAGE_DATA_NAME } from "$configs/constants";
 import { TaskType } from "$utils/types";
+import { createId } from "$utils/helpers";
 
-const fakeData: TaskType[] = [
+const data = localStorage.getItem(STORAGE_DATA_NAME);
+const storageData = data ? JSON.parse(data) : null;
+
+const fakeData: TaskType[] = storageData || [
   {
-    id: 1,
+    id: createId(),
     title: "Task card title",
     priority: 1,
     description:
@@ -10,7 +15,7 @@ const fakeData: TaskType[] = [
     status: "BACKLOG",
   },
   {
-    id: 2,
+    id: createId(),
     title: "Task card title",
     priority: 2,
     description:
@@ -18,7 +23,7 @@ const fakeData: TaskType[] = [
     status: "BACKLOG",
   },
   {
-    id: 3,
+    id: createId(),
     title: "Task card title",
     priority: 3,
     description:
@@ -27,7 +32,7 @@ const fakeData: TaskType[] = [
   },
 
   {
-    id: 4,
+    id: createId(),
     title: "Task card title",
     priority: 2,
     description:
@@ -35,7 +40,7 @@ const fakeData: TaskType[] = [
     status: "PROGRESS",
   },
   {
-    id: 5,
+    id: createId(),
     title: "Task card title",
     priority: 4,
     description:
@@ -43,7 +48,7 @@ const fakeData: TaskType[] = [
     status: "PROGRESS",
   },
   {
-    id: 6,
+    id: createId(),
     title: "Task card title",
     priority: 5,
     description:

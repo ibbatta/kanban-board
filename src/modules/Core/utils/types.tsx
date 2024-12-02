@@ -1,18 +1,36 @@
 import { ReactNode } from "react";
 
 export type StatusType = "BACKLOG" | "PROGRESS" | "DONE";
-export type LevelType = 1 | 2 | 3 | 4 | 5;
+
+export type LevelType = 1 | 2 | 3 | 4 | 5 | string;
 
 export type PriorityType = {
   level: LevelType;
 };
 
 export type TaskType = {
-  id: number;
+  id: string;
   title: string;
   priority: LevelType;
   description: string;
   status: StatusType;
+};
+
+export type TaskStoreType = {
+  tasks: TaskType[];
+  addTask: (columnId: string) => void;
+  removeTask: (taskId: string) => void;
+  updateTask: ({
+    id,
+    title,
+    description,
+    priority,
+  }: {
+    id: string;
+    title: string;
+    description: string;
+    priority: LevelType;
+  }) => void;
 };
 
 export type CardType = {
@@ -21,11 +39,11 @@ export type CardType = {
 };
 
 export type ColumnType = {
-  id: number | string;
+  id: string;
   title: string;
   tasks: TaskType[];
 };
 
 export type AddTaskType = {
-  columnId: number | string;
+  columnId: string;
 };
