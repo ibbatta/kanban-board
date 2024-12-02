@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, PencilIcon, CheckIcon } from "@heroicons/react/24/outline";
 
 import { CardType } from "$utils/types";
 import { useDataStore } from "$states/store";
 
 import PriorityBadge from "$components/PriorityBadge";
 
-function Card({ task, footerContent }: CardType) {
+function Card({ task }: CardType) {
   const { id, title, description, priority = 3 } = task;
 
-  const { tasks, removeTask, updateTask } = useDataStore();
+  const { removeTask, updateTask } = useDataStore();
 
-  const [isEditTitle, setIsEditTitle] = useState(false);
-  const [isEditDescription, setIsEditDescription] = useState(false);
-  const [isEditPriority, setIsEditPriority] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
@@ -22,93 +20,104 @@ function Card({ task, footerContent }: CardType) {
   return (
     <article
       data-id={id}
-      draggable="true"
-      className="cursor-grab rounded border bg-white active:cursor-grabbing"
+      draggable={!isEditing}
+      onDrag={(e) => {
+        // console.log("DRAG", e);
+      }}
+      onDragStart={(e) => {
+        e.dataTransfer.setData("id", id);
+      }}
+      onDragEnd={(e) => {
+        // console.log("DRAG END", e);
+      }}
+      className={`${!isEditing && "cursor-grab active:cursor-grabbing"} rounded border bg-white`}
     >
-      <header
-        className="flex items-center justify-between border-b p-2"
-        onClick={() => setIsEditTitle(true)}
-      >
-        {isEditTitle ? (
+      {/* HEADER */}
+      <header className="flex items-center justify-between border-b p-2">
+        {isEditing ? (
           <input
             className="rounded px-2 py-1 text-sm ring-1 ring-blue-300"
             autoFocus
             type="text"
             name="title"
             placeholder={title}
+            value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            onBlur={() => {
-              updateTask({
-                ...task,
-                title: newTitle,
-              });
-              setIsEditTitle(false);
-            }}
           />
         ) : (
-          <h4 className="cursor-pointer text-base font-semibold">{title}</h4>
+          <h4 className="text-base font-semibold">{title}</h4>
         )}
-        <button
-          className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
-          onClick={() => {
-            removeTask(id);
-          }}
-        >
-          <XMarkIcon width={12} height={12} />
-        </button>
+        <span className="item-center flex gap-2">
+          {isEditing ? (
+            <button
+              className="rounded bg-green-100 p-1 text-green-500 transition-colors duration-300 ease-in-out hover:bg-green-200"
+              onClick={() => {
+                updateTask({
+                  ...task,
+                  title: newTitle,
+                  description: newDescription,
+                  priority: newPriority,
+                });
+                setIsEditing(false);
+              }}
+            >
+              <CheckIcon width={16} height={16} />
+            </button>
+          ) : (
+            <button
+              className="rounded bg-amber-100 p-1 text-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-200"
+              onClick={() => {
+                setIsEditing(true);
+              }}
+            >
+              <PencilIcon width={16} height={16} />
+            </button>
+          )}
+          <button
+            className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
+            onClick={() => {
+              removeTask(id);
+            }}
+          >
+            <XMarkIcon width={16} height={16} />
+          </button>
+        </span>
       </header>
-      <div
-        className="mb-2 cursor-pointer overflow-y-hidden truncate text-balance p-2 pb-0 text-base font-thin"
-        onClick={() => setIsEditDescription(true)}
-      >
-        {isEditDescription ? (
+
+      {/* DESCRIPTION */}
+      <div className="mb-2 overflow-y-hidden truncate text-balance p-2 pb-0 text-base font-thin">
+        {isEditing ? (
           <textarea
             className="w-full rounded px-2 py-1 text-sm ring-1 ring-blue-300"
             name="description"
-            autoFocus
+            value={newDescription}
             rows={5}
             placeholder={description}
             onChange={(e) => setNewDescription(e.target.value)}
-            onBlur={() => {
-              updateTask({
-                ...task,
-                description: newDescription,
-              });
-              setIsEditDescription(false);
-            }}
           />
         ) : (
           <p className="line-clamp-3">{description}</p>
         )}
       </div>
+
+      {/* FOOTER */}
       <footer className="flex items-start justify-between border-t border-dashed p-2 text-xs text-gray-500">
-        {isEditPriority ? (
-          <input
-            className="rounded px-2 py-1 text-sm ring-1 ring-blue-300"
-            autoFocus
-            type="number"
+        {isEditing ? (
+          <select
+            className="w-1/2 rounded px-2 py-1 text-sm ring-1 ring-blue-300"
             name="priority"
-            placeholder={priority.toString()}
-            min={1}
-            max={5}
+            value={newPriority}
             onChange={(e) => setNewPriority(e.target.value)}
-            onBlur={() => {
-              updateTask({
-                ...task,
-                priority: newPriority,
-              });
-              setIsEditPriority(false);
-            }}
-          />
-        ) : (
-          <span
-            className="cursor-pointer"
-            onClick={() => setIsEditPriority(true)}
           >
-            <PriorityBadge level={priority} />
-          </span>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </select>
+        ) : (
+          <PriorityBadge level={priority} />
         )}
-        {footerContent && <span>{footerContent}</span>}
       </footer>
     </article>
   );

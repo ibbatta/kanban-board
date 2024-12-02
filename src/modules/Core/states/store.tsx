@@ -33,12 +33,21 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
     }));
     updateLocalStorage(get().tasks);
   },
-  updateTask: ({ id, title, description, priority }) => {
+  updateTask: ({ id, title, description, priority, status }) => {
     set((state) => ({
       tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, title, description, priority } : task,
+        task.id === id
+          ? { ...task, title, description, priority, status }
+          : task,
       ),
     }));
     updateLocalStorage(get().tasks);
   },
+}));
+
+export const useDragStore = create((set) => ({
+  cardId: null,
+  columnId: null,
+  clearCardDrag: () => set(() => ({ cardId: null })),
+  clearColumnDrag: () => set(() => ({ columnId: null })),
 }));

@@ -1,6 +1,4 @@
-import { ReactNode } from "react";
-
-export type StatusType = "BACKLOG" | "PROGRESS" | "DONE";
+export type StatusType = "BACKLOG" | "PROGRESS" | "DONE" | string;
 
 export type LevelType = 1 | 2 | 3 | 4 | 5 | string;
 
@@ -25,17 +23,18 @@ export type TaskStoreType = {
     title,
     description,
     priority,
+    status,
   }: {
     id: string;
     title: string;
     description: string;
     priority: LevelType;
+    status: StatusType;
   }) => void;
 };
 
 export type CardType = {
   task: TaskType;
-  footerContent?: ReactNode;
 };
 
 export type ColumnType = {
