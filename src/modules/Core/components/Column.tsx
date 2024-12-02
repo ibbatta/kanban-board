@@ -40,7 +40,7 @@ function Column({ id, title, tasks: columnTasks }: ColumnType) {
       <div className="mb-4 flex items-center justify-between text-slate-400">
         <span className="flex items-center gap-2">
           <h2 className="text-2xl font-bold">{title}</h2>
-          <span className="text-xl">({tasks.length})</span>
+          <span className="text-xl">({columnTasks.length})</span>
         </span>
         <span>
           <AddTaskButton columnId={id} />
