@@ -4,14 +4,14 @@ import { STORAGE_DATA_NAME } from "$configs/constants";
 import { TaskType, TaskStoreType } from "$utils/types";
 import { createId } from "$utils/helpers";
 
-import fakeData from "../data/fakeData";
+import getData from "../data/getData";
 
 const updateLocalStorage = (data: TaskType[]) => {
   localStorage.setItem(STORAGE_DATA_NAME, JSON.stringify(data));
 };
 
 export const useDataStore = create<TaskStoreType>((set, get) => ({
-  tasks: fakeData,
+  tasks: getData,
   addTask: (columnId) => {
     set((state) => ({
       tasks: [
@@ -43,11 +43,4 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
     }));
     updateLocalStorage(get().tasks);
   },
-}));
-
-export const useDragStore = create((set) => ({
-  cardId: null,
-  columnId: null,
-  clearCardDrag: () => set(() => ({ cardId: null })),
-  clearColumnDrag: () => set(() => ({ columnId: null })),
 }));

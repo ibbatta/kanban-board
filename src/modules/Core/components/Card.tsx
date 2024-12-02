@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { XMarkIcon, PencilIcon, CheckIcon } from "@heroicons/react/24/outline";
+import {
+  XMarkIcon,
+  PencilIcon,
+  CheckIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 import { CardType } from "$utils/types";
 import { useDataStore } from "$states/store";
@@ -21,16 +26,10 @@ function Card({ task }: CardType) {
     <article
       data-id={id}
       draggable={!isEditing}
-      onDrag={(e) => {
-        // console.log("DRAG", e);
-      }}
       onDragStart={(e) => {
         e.dataTransfer.setData("id", id);
       }}
-      onDragEnd={(e) => {
-        // console.log("DRAG END", e);
-      }}
-      className={`${!isEditing && "cursor-grab active:cursor-grabbing"} rounded border bg-white`}
+      className={`${!isEditing && "cursor-grab active:cursor-grabbing active:border active:border-dashed active:border-blue-300"} rounded border bg-white`}
     >
       {/* HEADER */}
       <header className="flex items-center justify-between border-b p-2">
@@ -73,14 +72,25 @@ function Card({ task }: CardType) {
               <PencilIcon width={16} height={16} />
             </button>
           )}
-          <button
-            className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
-            onClick={() => {
-              removeTask(id);
-            }}
-          >
-            <XMarkIcon width={16} height={16} />
-          </button>
+          {isEditing ? (
+            <button
+              className="rounded bg-gray-100 p-1 text-gray-500 transition-colors duration-300 ease-in-out hover:bg-gray-200"
+              onClick={() => {
+                setIsEditing(false);
+              }}
+            >
+              <XMarkIcon width={16} height={16} />
+            </button>
+          ) : (
+            <button
+              className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
+              onClick={() => {
+                removeTask(id);
+              }}
+            >
+              <TrashIcon width={16} height={16} />
+            </button>
+          )}
         </span>
       </header>
 
