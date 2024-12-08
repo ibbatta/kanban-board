@@ -17,10 +17,10 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
       tasks: [
         ...state.tasks,
         {
-          id: createId(),
+          taskId: createId(),
           title: "New Task",
           description: "Description",
-          priority: 3,
+          priority: 2,
           status: columnId,
         } as TaskType,
       ],
@@ -29,17 +29,23 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
   },
   removeTask: (taskId) => {
     set((state) => ({
-      tasks: state.tasks.filter((task) => task.id !== taskId),
+      tasks: state.tasks.filter((task) => task.taskId !== taskId),
     }));
     updateLocalStorage(get().tasks);
   },
-  updateTask: ({ id, title, description, priority, status }) => {
+  updateTask: ({ taskId, title, description, priority, status }) => {
     set((state) => ({
       tasks: state.tasks.map((task) =>
-        task.id === id
+        task.taskId === taskId
           ? { ...task, title, description, priority, status }
           : task,
       ),
+    }));
+    updateLocalStorage(get().tasks);
+  },
+  updateAllTasks: (newTasksList) => {
+    set(() => ({
+      tasks: newTasksList,
     }));
     updateLocalStorage(get().tasks);
   },

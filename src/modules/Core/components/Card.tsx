@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, DragEvent } from "react";
 import {
   XMarkIcon,
   PencilIcon,
@@ -6,15 +6,16 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 
-import { CardType } from "$utils/types";
+import { CardType, LevelType } from "$utils/types";
 import { useDataStore } from "$states/store";
 
 import PriorityBadge from "$components/PriorityBadge";
 
-function Card({ task }: CardType) {
-  const { id, title, description, priority = 3 } = task;
+function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
+  const { taskId, title, description, priority = 3 } = task;
 
   const { removeTask, updateTask } = useDataStore();
+  const [isCardActive, setCardActive] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -24,14 +25,27 @@ function Card({ task }: CardType) {
 
   return (
     <article
-      data-id={id}
+      data-id={taskId}
       draggable={!isEditing}
-      onDragStart={(e) => {
-        e.dataTransfer.setData("id", id);
+      onDragStart={(e: DragEvent) => {
+        e.dataTransfer.setData("id", taskId);
       }}
-      className={`${!isEditing && "cursor-grab active:cursor-grabbing active:border active:border-dashed active:border-blue-300"} rounded border bg-white`}
+      onDragOver={(e: DragEvent) => {
+        e.preventDefault();
+        onDragEnter(taskId);
+        setCardActive(true);
+      }}
+      onDragLeave={() => {
+        onDragLeave();
+        setCardActive(false);
+      }}
+      onDrop={(e) => {
+        onDrop(e, taskId);
+        setCardActive(false);
+      }}
+      className={`${!isEditing && "cursor-grab active:cursor-grabbing active:border active:border-dashed active:border-blue-300"} rounded border bg-white ${isCardActive && "border-pink-300 bg-gray-200/70 opacity-50"}`}
     >
-      {/* HEADER */}
+      {/* HEADER TITLE */}
       <header className="flex items-center justify-between border-b p-2">
         {isEditing ? (
           <input
@@ -46,6 +60,8 @@ function Card({ task }: CardType) {
         ) : (
           <h4 className="text-base font-semibold">{title}</h4>
         )}
+
+        {/* HEADER BUTTONS */}
         <span className="item-center flex gap-2">
           {isEditing ? (
             <button
@@ -85,7 +101,7 @@ function Card({ task }: CardType) {
             <button
               className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
               onClick={() => {
-                removeTask(id);
+                removeTask(taskId);
               }}
             >
               <TrashIcon width={16} height={16} />
@@ -117,13 +133,13 @@ function Card({ task }: CardType) {
             className="w-1/2 rounded px-2 py-1 text-sm ring-1 ring-blue-300"
             name="priority"
             value={newPriority}
-            onChange={(e) => setNewPriority(e.target.value)}
+            onChange={(e) => {
+              setNewPriority(parseInt(e.target.value) as LevelType);
+            }}
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
           </select>
         ) : (
           <PriorityBadge level={priority} />

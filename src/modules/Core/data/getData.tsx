@@ -7,24 +7,24 @@ const storageData = data ? JSON.parse(data) : null;
 
 const fakeData: TaskType[] = storageData || [
   {
-    id: createId(),
-    title: "Task card title",
+    taskId: createId(),
+    title: "Task 1",
     priority: 1,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "BACKLOG",
   },
   {
-    id: createId(),
-    title: "Task card title",
+    taskId: createId(),
+    title: "Task 2",
     priority: 2,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "BACKLOG",
   },
   {
-    id: createId(),
-    title: "Task card title",
+    taskId: createId(),
+    title: "Task 3",
     priority: 3,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
@@ -32,25 +32,25 @@ const fakeData: TaskType[] = storageData || [
   },
 
   {
-    id: createId(),
-    title: "Task card title",
+    taskId: createId(),
+    title: "Task 4",
     priority: 2,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "PROGRESS",
   },
   {
-    id: createId(),
-    title: "Task card title",
-    priority: 4,
+    taskId: createId(),
+    title: "Task 5",
+    priority: 3,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "PROGRESS",
   },
   {
-    id: createId(),
-    title: "Task card title",
-    priority: 5,
+    taskId: createId(),
+    title: "Task 6",
+    priority: 2,
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente a voluptatem consectetur velit? Sint dolores veniam maiores distinctio beatae natus dolore, ex ipsum magnam velit. Ea deserunt voluptate eligendi consequatur!",
     status: "DONE",
