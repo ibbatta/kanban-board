@@ -1,4 +1,4 @@
-import { useState, useRef, DragEvent } from "react";
+import { useState, useRef, useMemo, DragEvent } from "react";
 
 import { ColumnType, TaskType } from "$utils/types";
 import { useDataStore } from "$states/store";

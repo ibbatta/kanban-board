@@ -20,7 +20,7 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
           taskId: createId(),
           title: "New Task",
           description: "Description",
-          priority: 2,
+          priority: 3,
           status: columnId,
         } as TaskType,
       ],

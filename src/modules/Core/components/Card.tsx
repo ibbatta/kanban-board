@@ -1,4 +1,4 @@
-import { useState, DragEvent } from "react";
+import { useState, useMemo, DragEvent } from "react";
 import {
   XMarkIcon,
   PencilIcon,
@@ -12,7 +12,12 @@ import { useDataStore } from "$states/store";
 import PriorityBadge from "$components/PriorityBadge";
 
 function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
-  const { taskId, title, description, priority = 3 } = task;
+  const {
+    taskId,
+    title,
+    description,
+    priority = 3,
+  } = useMemo(() => task, [task]);
 
   const { removeTask, updateTask } = useDataStore();
   const [isCardActive, setCardActive] = useState(false);
