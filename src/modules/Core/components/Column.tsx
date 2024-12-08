@@ -1,40 +1,72 @@
-import { useState, DragEvent } from "react";
+import { useState, useRef, DragEvent } from "react";
 
-import { ColumnType, StatusType, TaskType } from "$utils/types";
-
+import { ColumnType, TaskType } from "$utils/types";
 import { useDataStore } from "$states/store";
 
 import Card from "./Card";
 import AddTaskButton from "./AddTaskButton";
 
-function Column({ id, title, tasks: columnTasks }: ColumnType) {
-  const [isActive, setIsActive] = useState(false);
-  const { tasks, updateTask } = useDataStore();
+function Column({ columnId, title, tasks: columnTasks }: ColumnType) {
+  const { tasks, updateAllTasks } = useDataStore();
+  const [isColumnActive, setColumnActive] = useState(false);
 
-  const handleDrop = (
-    e: DragEvent<HTMLElement>,
-    status: StatusType,
-    storeTasks: TaskType[],
-  ) => {
+  const placeholderColumnRef = useRef<string | null>(null);
+  const placeholderCardRef = useRef<string | null>(null);
+
+  const handleDrop = (e: DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    let isDataUpdated: boolean = false;
+
     const draggedCardId = e.dataTransfer.getData("id");
-    const currentTaskDragged = storeTasks.find(
-      (task) => task.id === draggedCardId,
+    const draggedCardIndex = tasks.findIndex(
+      (task) => task.taskId === draggedCardId,
     );
-    if (currentTaskDragged) updateTask({ ...currentTaskDragged, status });
+
+    let cloneTasks: TaskType[] = [...tasks];
+
+    if (placeholderCardRef.current) {
+      isDataUpdated = true;
+      const placeholderIndex = cloneTasks.findIndex(
+        (task) => task.taskId === placeholderCardRef.current,
+      );
+
+      [cloneTasks[draggedCardIndex], cloneTasks[placeholderIndex]] = [
+        cloneTasks[placeholderIndex],
+        cloneTasks[draggedCardIndex],
+      ];
+    }
+
+    if (placeholderColumnRef.current) {
+      isDataUpdated = true;
+      cloneTasks = cloneTasks.map((task: TaskType) => {
+        return task.taskId === draggedCardId
+          ? { ...task, status: placeholderColumnRef.current }
+          : task;
+      }) as TaskType[];
+    }
+
+    if (isDataUpdated) updateAllTasks(cloneTasks);
+
+    e.dataTransfer.clearData();
+    placeholderCardRef.current = null;
+    placeholderColumnRef.current = null;
   };
+
   return (
     <section
-      className={`flex h-full w-full flex-1 flex-col overflow-y-auto rounded ${isActive ? "bg-amber-50/80" : "bg-slate-50"} p-2`}
+      className={`flex h-full w-full flex-1 flex-col overflow-y-auto rounded ${isColumnActive ? "bg-amber-50/80" : "bg-slate-50"} p-2`}
       onDragOver={(e) => {
         e.preventDefault();
-        setIsActive(true);
+        setColumnActive(true);
+        placeholderColumnRef.current = columnId;
       }}
       onDragLeave={() => {
-        setIsActive(false);
+        placeholderColumnRef.current = null;
+        setColumnActive(false);
       }}
       onDrop={(e) => {
-        handleDrop(e, id, tasks);
-        setIsActive(false);
+        handleDrop(e);
+        setColumnActive(false);
       }}
     >
       <div className="mb-4 flex items-center justify-between text-slate-400">
@@ -43,17 +75,31 @@ function Column({ id, title, tasks: columnTasks }: ColumnType) {
           <span className="text-xl">({columnTasks.length})</span>
         </span>
         <span>
-          <AddTaskButton columnId={id} />
+          <AddTaskButton columnId={columnId} />
         </span>
       </div>
       <div className="flex flex-col gap-2">
         {columnTasks.map((task) => {
-          return <Card key={task.id} task={task} />;
+          return (
+            <Card
+              key={task.taskId}
+              task={task}
+              onDragEnter={(cardId) => {
+                if (cardId) placeholderCardRef.current = cardId;
+              }}
+              onDragLeave={() => {
+                placeholderCardRef.current = null;
+              }}
+              onDrop={(e) => {
+                handleDrop(e);
+              }}
+            />
+          );
         })}
       </div>
       {columnTasks.length > 0 && (
         <div className="my-6 flex justify-center">
-          <AddTaskButton columnId={id} />
+          <AddTaskButton columnId={columnId} />
         </div>
       )}
     </section>

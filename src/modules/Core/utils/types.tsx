@@ -1,13 +1,15 @@
-export type StatusType = "BACKLOG" | "PROGRESS" | "DONE" | string;
+import { DragEvent } from "react";
 
-export type LevelType = 1 | 2 | 3 | 4 | 5 | string;
+export type StatusType = "BACKLOG" | "PROGRESS" | "DONE";
+
+export type LevelType = 1 | 2 | 3;
 
 export type PriorityType = {
   level: LevelType;
 };
 
 export type TaskType = {
-  id: string;
+  taskId: string;
   title: string;
   priority: LevelType;
   description: string;
@@ -19,26 +21,24 @@ export type TaskStoreType = {
   addTask: (columnId: string) => void;
   removeTask: (taskId: string) => void;
   updateTask: ({
-    id,
+    taskId,
     title,
     description,
     priority,
     status,
-  }: {
-    id: string;
-    title: string;
-    description: string;
-    priority: LevelType;
-    status: StatusType;
-  }) => void;
+  }: TaskType) => void;
+  updateAllTasks: (newTasks: TaskType[]) => void;
 };
 
 export type CardType = {
   task: TaskType;
+  onDragEnter: (cardIndex?: string) => void;
+  onDragLeave: () => void;
+  onDrop: (e: DragEvent<HTMLElement>, dropCardId: string) => void;
 };
 
 export type ColumnType = {
-  id: string;
+  columnId: string;
   title: string;
   tasks: TaskType[];
 };
