@@ -8,6 +8,9 @@
 ---
 
 ## To DO
+
 - [x] Add sorting cards :tada:
-- [x] Optimizing re-rendering :tada: 
-- [ ] Add assignee / user task
+- [x] Optimizing re-rendering :tada:
+- [x] Create header / footer
+- [ ] Create right-click menu on tasks
+- [ ] Create authenticate
