@@ -1,17 +1,11 @@
-import { useState, useMemo, DragEvent } from "react";
-import {
-  XMarkIcon,
-  PencilIcon,
-  CheckIcon,
-  TrashIcon,
-  EllipsisVerticalIcon,
-} from "@heroicons/react/24/outline";
+import { useState, useMemo, DragEvent, MouseEvent } from "react";
+
+import { EllipsisVerticalIcon, CheckIcon } from "@heroicons/react/24/outline";
 
 import { CardType, LevelType } from "$utils/types";
-import { useDataStore } from "$states/store";
+import { useDataStore, useCardMenuStore } from "$states/store";
 
 import PriorityBadge from "$components/PriorityBadge";
-
 import { CardMenu } from "$components/Menu";
 
 function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
@@ -22,11 +16,10 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
     priority = 3,
   } = useMemo(() => task, [task]);
 
-  const [isShowEditMenu, setShowEditMenu] = useState(false);
-
   const { removeTask, updateTask } = useDataStore();
-  const [isCardActive, setCardActive] = useState(false);
+  const { currentOpen, toggleMenu } = useCardMenuStore();
 
+  const [isCardActive, setCardActive] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const [newTitle, setNewTitle] = useState(title);
@@ -34,7 +27,7 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
   const [newPriority, setNewPriority] = useState(priority);
 
   const toggleCardMenu = () => {
-    setShowEditMenu(!isShowEditMenu);
+    toggleMenu(taskId);
   };
 
   return (
@@ -57,6 +50,10 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
         onDrop(e, taskId);
         setCardActive(false);
       }}
+      onContextMenu={(e: MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        toggleMenu(taskId);
+      }}
       className={`${!isEditing && "cursor-grab active:cursor-grabbing active:border active:border-dashed active:border-blue-300"} rounded border bg-white ${isCardActive && "border-pink-300 bg-gray-200/70 opacity-50"}`}
     >
       {/* HEADER TITLE */}
@@ -78,32 +75,6 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
         {/* HEADER BUTTONS */}
         <span className="relative">
           {isEditing ? (
-            <div>asd</div>
-          ) : (
-            <button
-              className="rounded bg-gray-100 p-1 text-gray-400 transition-colors duration-300 ease-in-out hover:bg-gray-200"
-              onClick={toggleCardMenu}
-            >
-              <EllipsisVerticalIcon width={16} height={16} />
-            </button>
-          )}
-
-          {/* CARD MENU */}
-          {isShowEditMenu && (
-            <span onMouseLeave={toggleCardMenu}>
-              <CardMenu
-                onEdit={() => {
-                  setIsEditing(true);
-                }}
-                onDelete={() => {
-                  removeTask(taskId);
-                }}
-              />
-            </span>
-          )}
-        </span>
-        {/* <span className="item-center flex gap-2">
-          {isEditing ? (
             <button
               className="rounded bg-green-100 p-1 text-green-500 transition-colors duration-300 ease-in-out hover:bg-green-200"
               onClick={() => {
@@ -120,34 +91,26 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
             </button>
           ) : (
             <button
-              className="rounded bg-amber-100 p-1 text-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-200"
-              onClick={() => {
+              className="rounded bg-gray-100 p-1 text-gray-400 transition-colors duration-300 ease-in-out hover:bg-gray-200"
+              onClick={toggleCardMenu}
+            >
+              <EllipsisVerticalIcon width={16} height={16} />
+            </button>
+          )}
+
+          {/* CARD MENU */}
+          {currentOpen === taskId && (
+            <CardMenu
+              onEdit={() => {
                 setIsEditing(true);
               }}
-            >
-              <PencilIcon width={16} height={16} />
-            </button>
-          )}
-          {isEditing ? (
-            <button
-              className="rounded bg-gray-100 p-1 text-gray-500 transition-colors duration-300 ease-in-out hover:bg-gray-200"
-              onClick={() => {
-                setIsEditing(false);
-              }}
-            >
-              <XMarkIcon width={16} height={16} />
-            </button>
-          ) : (
-            <button
-              className="rounded bg-red-100 p-1 text-red-500 transition-colors duration-300 ease-in-out hover:bg-red-200"
-              onClick={() => {
+              onDelete={() => {
                 removeTask(taskId);
               }}
-            >
-              <TrashIcon width={16} height={16} />
-            </button>
+              onMouseLeave={toggleCardMenu}
+            />
           )}
-        </span> */}
+        </span>
       </header>
 
       {/* DESCRIPTION */}

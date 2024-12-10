@@ -50,3 +50,15 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
     updateLocalStorage(get().tasks);
   },
 }));
+
+export const useCardMenuStore = create<{
+  currentOpen: string;
+  toggleMenu: (id: string) => void;
+}>((set) => ({
+  currentOpen: "",
+  toggleMenu: (id) => {
+    set((state) => ({
+      currentOpen: state.currentOpen !== id ? id : "",
+    }));
+  },
+}));

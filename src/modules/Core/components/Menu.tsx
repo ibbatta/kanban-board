@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 function UserMenu() {
@@ -42,22 +43,19 @@ function UserMenu() {
 function CardMenu({
   onEdit,
   onDelete,
-  position,
+  onMouseLeave,
 }: {
   onEdit: () => void;
   onDelete: () => void;
-  position?: { x: number; y: number };
+  onMouseLeave: () => void;
 }) {
-  console.log("positions", position);
-
-  const cssPosition = position
-    ? `right-${position.x} top-${position.y}`
-    : "right-0 top-8";
+  const cssPosition = "absolute right-0 top-8";
 
   return (
     <div
+      onMouseLeave={onMouseLeave}
       id="userDropdown"
-      className={`absolute ${cssPosition} z-10 w-44 divide-y divide-gray-100 rounded-lg border-2 border-slate-600 bg-white shadow-xl`}
+      className={`${cssPosition} z-10 w-44 divide-y divide-gray-100 rounded-lg border-2 border-slate-600 bg-white shadow-xl`}
     >
       <ul className="py-2 text-sm text-gray-700" aria-labelledby="avatarButton">
         <li>
