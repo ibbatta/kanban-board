@@ -4,12 +4,15 @@ import {
   PencilIcon,
   CheckIcon,
   TrashIcon,
+  EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
 
 import { CardType, LevelType } from "$utils/types";
 import { useDataStore } from "$states/store";
 
 import PriorityBadge from "$components/PriorityBadge";
+
+import { CardMenu } from "$components/Menu";
 
 function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
   const {
@@ -19,6 +22,8 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
     priority = 3,
   } = useMemo(() => task, [task]);
 
+  const [isShowEditMenu, setShowEditMenu] = useState(false);
+
   const { removeTask, updateTask } = useDataStore();
   const [isCardActive, setCardActive] = useState(false);
 
@@ -27,6 +32,10 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [newPriority, setNewPriority] = useState(priority);
+
+  const toggleCardMenu = () => {
+    setShowEditMenu(!isShowEditMenu);
+  };
 
   return (
     <article
@@ -67,7 +76,33 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
         )}
 
         {/* HEADER BUTTONS */}
-        <span className="item-center flex gap-2">
+        <span className="relative">
+          {isEditing ? (
+            <div>asd</div>
+          ) : (
+            <button
+              className="rounded bg-gray-100 p-1 text-gray-400 transition-colors duration-300 ease-in-out hover:bg-gray-200"
+              onClick={toggleCardMenu}
+            >
+              <EllipsisVerticalIcon width={16} height={16} />
+            </button>
+          )}
+
+          {/* CARD MENU */}
+          {isShowEditMenu && (
+            <span onMouseLeave={toggleCardMenu}>
+              <CardMenu
+                onEdit={() => {
+                  setIsEditing(true);
+                }}
+                onDelete={() => {
+                  removeTask(taskId);
+                }}
+              />
+            </span>
+          )}
+        </span>
+        {/* <span className="item-center flex gap-2">
           {isEditing ? (
             <button
               className="rounded bg-green-100 p-1 text-green-500 transition-colors duration-300 ease-in-out hover:bg-green-200"
@@ -112,7 +147,7 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
               <TrashIcon width={16} height={16} />
             </button>
           )}
-        </span>
+        </span> */}
       </header>
 
       {/* DESCRIPTION */}

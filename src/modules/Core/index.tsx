@@ -12,6 +12,7 @@ function Core() {
   const { tasks } = useDataStore();
 
   const columnsArray = useMemo(() => Object.entries(STATUS), []);
+
   return (
     <div className="flex h-screen flex-col">
       <Header />
