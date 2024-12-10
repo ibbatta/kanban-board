@@ -10,7 +10,8 @@
 ## To DO
 
 - [x] Add sorting cards :tada:
-- [x] Optimizing re-rendering :tada:
-- [x] Create header / footer
-- [ ] Create right-click menu on tasks
+- [x] Create header / footer :tada:
+- [x] Create right-click menu on tasks :tada:
 - [ ] Create authenticate
+- [ ] Optimizing performances
+- [ ] Optimize lighthouse review
