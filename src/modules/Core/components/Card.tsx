@@ -1,8 +1,12 @@
-import { useState, useMemo, DragEvent, MouseEvent } from "react";
+import { useState, useMemo, DragEvent, MouseEvent, ChangeEvent } from "react";
+import {
+  EllipsisVerticalIcon,
+  CheckIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 
-import { EllipsisVerticalIcon, CheckIcon } from "@heroicons/react/24/outline";
-
-import { CardType, LevelType } from "$utils/types";
+import { ICON_SIZES, DEFAULT_PRIORITY } from "$configs/constants";
+import { CardType } from "$utils/types";
 import { useDataStore, useCardMenuStore } from "$states/store";
 
 import PriorityBadge from "$components/PriorityBadge";
@@ -13,7 +17,7 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
     taskId,
     title,
     description,
-    priority = 3,
+    priority = DEFAULT_PRIORITY,
   } = useMemo(() => task, [task]);
 
   const { removeTask, updateTask } = useDataStore();
@@ -22,11 +26,43 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
   const [isCardActive, setCardActive] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [newTitle, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
-  const [newPriority, setNewPriority] = useState(priority);
+  const [formData, setFormData] = useState({ ...task });
+
+  const handleFormChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const toggleCardMenu = () => {
+    toggleMenu(taskId);
+  };
+
+  const handleDragStart = (e: DragEvent) => {
+    e.dataTransfer.setData("id", taskId);
+  };
+
+  const handleDragOver = (e: DragEvent) => {
+    e.preventDefault();
+    onDragEnter(taskId);
+    setCardActive(true);
+  };
+
+  const handleDragLeave = () => {
+    onDragLeave();
+    setCardActive(false);
+  };
+
+  const handleDrop = (e: DragEvent<HTMLElement>) => {
+    onDrop(e, taskId);
+    setCardActive(false);
+  };
+
+  const handleContextMenu = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     toggleMenu(taskId);
   };
 
@@ -34,26 +70,11 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
     <article
       data-id={taskId}
       draggable={!isEditing}
-      onDragStart={(e: DragEvent) => {
-        e.dataTransfer.setData("id", taskId);
-      }}
-      onDragOver={(e: DragEvent) => {
-        e.preventDefault();
-        onDragEnter(taskId);
-        setCardActive(true);
-      }}
-      onDragLeave={() => {
-        onDragLeave();
-        setCardActive(false);
-      }}
-      onDrop={(e) => {
-        onDrop(e, taskId);
-        setCardActive(false);
-      }}
-      onContextMenu={(e: MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        toggleMenu(taskId);
-      }}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      onContextMenu={handleContextMenu}
       className={`${!isEditing && "cursor-grab active:cursor-grabbing active:border active:border-dashed active:border-blue-300"} rounded border bg-white ${isCardActive && "border-pink-300 bg-gray-200/70 opacity-50"}`}
     >
       {/* HEADER TITLE */}
@@ -64,9 +85,9 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
             autoFocus
             type="text"
             name="title"
+            value={formData.title}
             placeholder={title}
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
+            onChange={handleFormChange}
           />
         ) : (
           <h4 className="text-base font-semibold">{title}</h4>
@@ -75,26 +96,32 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
         {/* HEADER BUTTONS */}
         <span className="relative">
           {isEditing ? (
-            <button
-              className="rounded bg-green-100 p-1 text-green-500 transition-colors duration-300 ease-in-out hover:bg-green-200"
-              onClick={() => {
-                updateTask({
-                  ...task,
-                  title: newTitle,
-                  description: newDescription,
-                  priority: newPriority,
-                });
-                setIsEditing(false);
-              }}
-            >
-              <CheckIcon width={16} height={16} />
-            </button>
+            <span className="flex gap-2">
+              <button
+                className="rounded bg-green-100 p-1 text-green-500 transition-colors duration-300 ease-in-out hover:bg-green-200"
+                onClick={() => {
+                  updateTask({
+                    ...task,
+                    ...formData,
+                  });
+                  setIsEditing(false);
+                }}
+              >
+                <CheckIcon {...ICON_SIZES.sm} />
+              </button>
+              <button
+                className="rounded bg-gray-100 p-1 text-gray-500 transition-colors duration-300 ease-in-out hover:bg-gray-200"
+                onClick={() => setIsEditing(false)}
+              >
+                <XMarkIcon {...ICON_SIZES.sm} />
+              </button>
+            </span>
           ) : (
             <button
               className="rounded bg-gray-100 p-1 text-gray-400 transition-colors duration-300 ease-in-out hover:bg-gray-200"
               onClick={toggleCardMenu}
             >
-              <EllipsisVerticalIcon width={16} height={16} />
+              <EllipsisVerticalIcon {...ICON_SIZES.sm} />
             </button>
           )}
 
@@ -103,6 +130,7 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
             <CardMenu
               onEdit={() => {
                 setIsEditing(true);
+                toggleCardMenu();
               }}
               onDelete={() => {
                 removeTask(taskId);
@@ -119,10 +147,10 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
           <textarea
             className="w-full rounded px-2 py-1 text-sm ring-1 ring-blue-300"
             name="description"
-            value={newDescription}
             rows={5}
+            value={formData.description}
             placeholder={description}
-            onChange={(e) => setNewDescription(e.target.value)}
+            onChange={handleFormChange}
           />
         ) : (
           <p className="line-clamp-3">{description}</p>
@@ -135,10 +163,8 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
           <select
             className="w-1/2 rounded px-2 py-1 text-sm ring-1 ring-blue-300"
             name="priority"
-            value={newPriority}
-            onChange={(e) => {
-              setNewPriority(parseInt(e.target.value) as LevelType);
-            }}
+            value={formData.priority}
+            onChange={handleFormChange}
           >
             <option value={1}>1</option>
             <option value={2}>2</option>

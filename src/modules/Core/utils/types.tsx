@@ -8,6 +8,16 @@ export type PriorityType = {
   level: LevelType;
 };
 
+export type PriorityMapType = Record<
+  LevelType,
+  {
+    dotColor: string;
+    bgColor: string;
+    textColor: string;
+    label: string;
+  }
+>;
+
 export type TaskType = {
   taskId: string;
   title: string;
@@ -16,33 +26,39 @@ export type TaskType = {
   status: StatusType;
 };
 
-export type TaskStoreType = {
-  tasks: TaskType[];
-  addTask: (columnId: string) => void;
-  removeTask: (taskId: string) => void;
-  updateTask: ({
-    taskId,
-    title,
-    description,
-    priority,
-    status,
-  }: TaskType) => void;
-  updateAllTasks: (newTasks: TaskType[]) => void;
-};
-
 export type CardType = {
   task: TaskType;
   onDragEnter: (cardIndex?: string) => void;
-  onDragLeave: () => void;
+  onDragLeave: (e?: DragEvent<HTMLElement>) => void;
   onDrop: (e: DragEvent<HTMLElement>, dropCardId: string) => void;
+};
+
+export type CardMenuType = {
+  onEdit: () => void;
+  onDelete: () => void;
+  onMouseLeave: () => void;
+};
+
+export type CardMenuStoreType = {
+  currentOpen: string | null;
+  toggleMenu: (id: string) => void;
 };
 
 export type ColumnType = {
   columnId: string;
   title: string;
-  tasks: TaskType[];
+  columnTasks: TaskType[];
 };
 
 export type AddTaskType = {
   columnId: string;
+  text?: string;
+};
+
+export type TaskStoreType = {
+  storeTasks: TaskType[];
+  addTask: (columnId: string) => void;
+  removeTask: (taskId: string) => void;
+  updateTask: ({ ...TaskType }) => void;
+  updateAllTasks: (newTasks: TaskType[]) => void;
 };

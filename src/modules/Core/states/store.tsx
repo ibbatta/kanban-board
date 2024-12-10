@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-import { STORAGE_DATA_NAME } from "$configs/constants";
-import { TaskType, TaskStoreType } from "$utils/types";
+import { STORAGE_DATA_NAME, DEFAULT_PRIORITY } from "$configs/constants";
+import { TaskType, TaskStoreType, CardMenuStoreType } from "$utils/types";
 import { createId } from "$utils/helpers";
 
 import getData from "../data/getData";
@@ -11,54 +11,51 @@ const updateLocalStorage = (data: TaskType[]) => {
 };
 
 export const useDataStore = create<TaskStoreType>((set, get) => ({
-  tasks: getData,
+  storeTasks: getData,
   addTask: (columnId) => {
     set((state) => ({
-      tasks: [
-        ...state.tasks,
+      storeTasks: [
+        ...state.storeTasks,
         {
           taskId: createId(),
           title: "New Task",
           description: "Description",
-          priority: 3,
+          priority: DEFAULT_PRIORITY,
           status: columnId,
         } as TaskType,
       ],
     }));
-    updateLocalStorage(get().tasks);
+    updateLocalStorage(get().storeTasks);
   },
   removeTask: (taskId) => {
     set((state) => ({
-      tasks: state.tasks.filter((task) => task.taskId !== taskId),
+      storeTasks: state.storeTasks.filter((task) => task.taskId !== taskId),
     }));
-    updateLocalStorage(get().tasks);
+    updateLocalStorage(get().storeTasks);
   },
   updateTask: ({ taskId, title, description, priority, status }) => {
     set((state) => ({
-      tasks: state.tasks.map((task) =>
+      storeTasks: state.storeTasks.map((task) =>
         task.taskId === taskId
           ? { ...task, title, description, priority, status }
           : task,
       ),
     }));
-    updateLocalStorage(get().tasks);
+    updateLocalStorage(get().storeTasks);
   },
   updateAllTasks: (newTasksList) => {
     set(() => ({
-      tasks: newTasksList,
+      storeTasks: newTasksList,
     }));
-    updateLocalStorage(get().tasks);
+    updateLocalStorage(get().storeTasks);
   },
 }));
 
-export const useCardMenuStore = create<{
-  currentOpen: string;
-  toggleMenu: (id: string) => void;
-}>((set) => ({
-  currentOpen: "",
+export const useCardMenuStore = create<CardMenuStoreType>((set) => ({
+  currentOpen: null,
   toggleMenu: (id) => {
     set((state) => ({
-      currentOpen: state.currentOpen !== id ? id : "",
+      currentOpen: state.currentOpen !== id ? id : null,
     }));
   },
 }));

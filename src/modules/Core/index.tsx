@@ -9,7 +9,7 @@ import Header from "$components/Header";
 import Footer from "$components/Footer";
 
 function Core() {
-  const { tasks } = useDataStore();
+  const { storeTasks } = useDataStore();
 
   const columnsArray = useMemo(() => Object.entries(STATUS), []);
 
@@ -18,7 +18,7 @@ function Core() {
       <Header />
       <main className="flex-stretch m-auto flex h-full max-w-[1000px] flex-auto gap-2 overflow-y-hidden p-2">
         {columnsArray.map(([colKey, colName]) => {
-          const filteredTasks = tasks
+          const filteredTasks = storeTasks
             .filter((task) => task.status === colKey)
             .sort((a, b) => a.priority - b.priority);
 
@@ -27,7 +27,7 @@ function Core() {
               key={colKey}
               columnId={colKey}
               title={colName}
-              tasks={filteredTasks}
+              columnTasks={filteredTasks}
             />
           );
         })}

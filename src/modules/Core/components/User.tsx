@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 
 import { UserMenu } from "$components/Menu";
 
-function HeaderUser() {
+function User() {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = useCallback(() => {
@@ -32,4 +32,4 @@ function HeaderUser() {
   );
 }
 
-export default HeaderUser;
+export default User;
