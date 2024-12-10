@@ -1,6 +1,6 @@
 import { QueueListIcon } from "@heroicons/react/24/outline";
 
-import HeaderUser from "$components/HeaderUser";
+import HeaderMenu from "$components/HeaderMenu";
 
 function Header() {
   return (
@@ -12,7 +12,7 @@ function Header() {
         </h1>
         <div className="self-center justify-self-center">———</div>
         <div className="self-center justify-self-end">
-          <HeaderUser />
+          <HeaderMenu />
         </div>
       </header>
     </>
