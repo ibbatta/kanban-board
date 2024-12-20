@@ -13,6 +13,6 @@
 - [x] Create header / footer :tada:
 - [x] Create right-click menu on tasks :tada:
 - [x] Create authenticate
+- [x] Optimizing performances
+- [x] Optimize lighthouse review
 - [ ] Create task for logged user
-- [ ] Optimizing performances
-- [ ] Optimize lighthouse review
