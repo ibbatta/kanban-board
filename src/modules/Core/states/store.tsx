@@ -1,7 +1,17 @@
 import { create } from "zustand";
 
-import { STORAGE_DATA_NAME, DEFAULT_PRIORITY } from "$configs/constants";
-import { TaskType, TaskStoreType, CardMenuStoreType } from "$utils/types";
+import {
+  STORAGE_DATA_NAME,
+  DEFAULT_PRIORITY,
+  STORAGE_USER_NAME,
+} from "$configs/constants";
+import {
+  TaskType,
+  TaskStoreType,
+  CardMenuStoreType,
+  UserType,
+  UserDataType,
+} from "$utils/types";
 import { createId } from "$utils/helpers";
 
 import getData from "../data/getData";
@@ -9,6 +19,18 @@ import getData from "../data/getData";
 const updateLocalStorage = (data: TaskType[]) => {
   localStorage.setItem(STORAGE_DATA_NAME, JSON.stringify(data));
 };
+
+const updateUserLocalStorage = (data: UserType | null) => {
+  if (data) {
+    localStorage.setItem(STORAGE_USER_NAME, JSON.stringify(data));
+  }
+};
+
+const clearLocalStorage = () => {
+  localStorage.removeItem(STORAGE_USER_NAME);
+};
+
+const storedUser = localStorage.getItem(STORAGE_USER_NAME);
 
 export const useDataStore = create<TaskStoreType>((set, get) => ({
   storeTasks: getData,
@@ -47,7 +69,7 @@ export const useDataStore = create<TaskStoreType>((set, get) => ({
     set(() => ({
       storeTasks: newTasksList,
     }));
-    updateLocalStorage(get().storeTasks);
+    updateLocalStorage(newTasksList);
   },
 }));
 
@@ -57,5 +79,19 @@ export const useCardMenuStore = create<CardMenuStoreType>((set) => ({
     set((state) => ({
       currentOpen: state.currentOpen !== id ? id : null,
     }));
+  },
+}));
+
+export const useUserStore = create<UserDataType>((set) => ({
+  user: storedUser ? JSON.parse(storedUser) : null,
+  setUser: (data: UserType) => {
+    set(() => ({
+      user: data,
+    }));
+    updateUserLocalStorage(data);
+  },
+  clearUser: () => {
+    set(() => ({ user: null }));
+    clearLocalStorage();
   },
 }));

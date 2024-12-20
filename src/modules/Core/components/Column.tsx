@@ -56,12 +56,14 @@ function Column({ columnId, title, columnTasks }: ColumnType) {
       }) as TaskType[];
     }
 
-    if (isDataUpdated) updateAllTasks(cloneTasks);
-
     e.dataTransfer.clearData();
     placeholderCardRef.current = null;
     placeholderColumnRef.current = null;
     setColumnActive(false);
+
+    document.startViewTransition(() => {
+      if (isDataUpdated) updateAllTasks(cloneTasks);
+    });
   };
 
   return (

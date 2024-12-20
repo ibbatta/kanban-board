@@ -12,6 +12,7 @@
 - [x] Add sorting cards :tada:
 - [x] Create header / footer :tada:
 - [x] Create right-click menu on tasks :tada:
-- [ ] Create authenticate
+- [x] Create authenticate
+- [ ] Create task for logged user
 - [ ] Optimizing performances
 - [ ] Optimize lighthouse review

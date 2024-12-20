@@ -62,3 +62,24 @@ export type TaskStoreType = {
   updateTask: ({ ...TaskType }) => void;
   updateAllTasks: (newTasks: TaskType[]) => void;
 };
+
+export type UserType = {
+  id: string;
+  name?: string;
+  family_name?: string;
+  given_name?: string;
+  picture: string;
+  email?: string;
+  verified_email?: boolean;
+};
+
+export type UserDataType = {
+  user?: UserType | null;
+  setUser: (data: UserType) => void;
+  clearUser: () => void;
+};
+
+export type UserMenuType = {
+  data: UserType;
+  onLogout: () => void;
+};
