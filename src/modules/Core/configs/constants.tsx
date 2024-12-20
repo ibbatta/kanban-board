@@ -38,21 +38,21 @@ export const ICON_SIZES = {
 
 export const PRIORITY: PriorityMapType = {
   1: {
-    dotColor: "bg-red-700/70",
+    dotColor: "bg-red-800",
     bgColor: "bg-red-100",
-    textColor: "text-red-700/70",
+    textColor: "text-red-800",
     label: "High",
   },
   2: {
-    dotColor: "bg-yellow-700/70",
+    dotColor: "bg-yellow-800",
     bgColor: "bg-yellow-100",
-    textColor: "text-yellow-700/70",
+    textColor: "text-yellow-800",
     label: "Medium",
   },
   3: {
-    dotColor: "bg-green-700/70",
+    dotColor: "bg-green-800",
     bgColor: "bg-green-100",
-    textColor: "text-green-700/70",
+    textColor: "text-green-800",
     label: "Low",
   },
 };

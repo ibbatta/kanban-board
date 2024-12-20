@@ -90,7 +90,7 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
             onChange={handleFormChange}
           />
         ) : (
-          <h4 className="text-base font-semibold">{title}</h4>
+          <h3 className="text-base font-semibold text-slate-500">{title}</h3>
         )}
 
         {/* HEADER BUTTONS */}
@@ -98,6 +98,9 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
           {isEditing ? (
             <span className="flex gap-2">
               <button
+                role="button"
+                title="save changes"
+                aria-label="save changes"
                 className="rounded bg-green-100 p-1 text-green-500 transition-colors duration-300 ease-in-out hover:bg-green-200"
                 onClick={() => {
                   updateTask({
@@ -110,6 +113,9 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
                 <CheckIcon {...ICON_SIZES.sm} />
               </button>
               <button
+                role="button"
+                title="cancel changes"
+                aria-label="cancel changes"
                 className="rounded bg-gray-100 p-1 text-gray-500 transition-colors duration-300 ease-in-out hover:bg-gray-200"
                 onClick={() => setIsEditing(false)}
               >
@@ -118,6 +124,9 @@ function Card({ task, onDragEnter, onDragLeave, onDrop }: CardType) {
             </span>
           ) : (
             <button
+              role="button"
+              title="open card menu"
+              aria-label="open card menu"
               className="rounded bg-gray-100 p-1 text-gray-400 transition-colors duration-300 ease-in-out hover:bg-gray-200"
               onClick={toggleCardMenu}
             >

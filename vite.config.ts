@@ -6,6 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vite.dev/config/
 export default defineConfig({
+  publicDir: "public",
   plugins: [react(), TanStackRouterVite(), tsconfigPaths({ loose: true })],
   css: {
     postcss: {

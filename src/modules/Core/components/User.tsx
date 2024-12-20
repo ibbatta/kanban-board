@@ -67,6 +67,9 @@ function User() {
         </>
       ) : (
         <button
+          role="button"
+          title="google login"
+          aria-label="google login"
           className="inline-flex items-center rounded bg-[#4285F4] px-4 py-2 text-center text-xs font-medium text-white hover:bg-[#4285F4]/90"
           type="button"
           onClick={() => {

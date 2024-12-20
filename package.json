@@ -1,15 +1,15 @@
 {
-  "name": "spa-boilerplate",
+  "name": "kanban-board",
   "author": {
     "name": "Maurizio Battaghini",
     "url": "https://github.com/ibbatta/spa-boilerplate"
   },
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

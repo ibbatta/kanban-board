@@ -31,6 +31,9 @@ function UserMenu({ data, onLogout }: UserMenuType) {
       <ul className="py-1 text-sm">
         <li>
           <button
+            role="button"
+            title="sign out"
+            aria-label="sign out"
             onClick={onLogout}
             className="flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           >
@@ -51,6 +54,9 @@ function CardMenu({ onEdit, onDelete, onMouseLeave }: CardMenuType) {
       <ul className="py-2 text-sm text-gray-700">
         <li>
           <button
+            role="button"
+            title="edit task"
+            aria-label="edit task"
             onClick={onEdit}
             className="flex w-full items-center gap-2 px-4 py-2 hover:bg-gray-100"
           >
@@ -62,6 +68,9 @@ function CardMenu({ onEdit, onDelete, onMouseLeave }: CardMenuType) {
       <ul className="py-2">
         <li>
           <button
+            role="button"
+            title="delete task"
+            aria-label="delete task"
             onClick={onDelete}
             className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-100"
           >
