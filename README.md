@@ -7,7 +7,8 @@
 
 ---
 
-## To DO
+## TO DO
+> Work in progress...
 
 - [x] Add sorting cards :tada:
 - [x] Create header / footer :tada:
