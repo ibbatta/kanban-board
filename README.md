@@ -5,8 +5,6 @@
 
 <img width="1250" alt="image" src="https://github.com/user-attachments/assets/eb57f2ce-d714-4672-806c-a70b2a158fe6" />
 
-
-
 ---
 
 ## To DO
@@ -14,7 +12,7 @@
 - [x] Add sorting cards :tada:
 - [x] Create header / footer :tada:
 - [x] Create right-click menu on tasks :tada:
-- [x] Create authenticate
-- [x] Optimizing performances
-- [x] Optimize lighthouse review
+- [x] Create authenticate :tada:
+- [x] Optimize performances :tada:
+- [x] Optimize lighthouse review :tada:
 - [ ] Create task for logged user
