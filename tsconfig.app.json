@@ -17,6 +17,7 @@
 
     "baseUrl": "./src/modules",
     "paths": {
+      "$assets/*": ["Core/assets/*"],
       "$components/*": ["Core/components/*"],
       "$configs/*": ["Core/configs/*"],
       "$states/*": ["Core/states/*"],

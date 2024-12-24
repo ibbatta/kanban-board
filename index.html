@@ -2,12 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="" />
+    <link rel="icon" type="image/svg+xml" href="" crossorigin="anonymous" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SPA Boilerplate</title>
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta name="description" content="A simple kanban board application" />
+    <meta
+      name="Cross-Origin-Opener-Policy"
+      content="same-origin-allow-popups"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.google.com; img-src 'self' data: https://*.google.com https://lh3.googleusercontent.com https://*.gstatic.com http://localhost:*; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://www.googleapis.com; frame-src 'self';"
+    />
+    <title>Kanban Board (playground)</title>
   </head>
   <body>
-    <div id="app" class="h-full" />
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="app" />
+    <script
+      type="module"
+      src="/src/main.tsx"
+      async
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

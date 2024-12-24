@@ -8,6 +8,13 @@ const storageData = data ? JSON.parse(data) : null;
 const fakeData: TaskType[] = storageData || [
   {
     taskId: createId(),
+    title: "Task 0",
+    priority: 1,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    status: "BACKLOG",
+  },
+  {
+    taskId: createId(),
     title: "Task 1",
     priority: 1,
     description:

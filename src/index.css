@@ -1,36 +1,10 @@
-@import url("./reset.css");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --backlog-color: rgb(129, 128, 128);
-  --progress-color: rgb(249, 245, 167);
-  --done-color: rgb(169, 240, 167);
-}
 
 body {
   width: 100vw;
   height: 100vh;
   position: relative;
   overflow-x: hidden;
-}
-
-.section__column:nth-child(1) {
-  .section__title > h2 {
-    color: var(--backlog-color);
-  }
-}
-
-.section__column:nth-child(2) {
-  .section__title > h2 {
-    color: var(--progress-color);
-  }
-}
-
-.section__column:nth-child(3) {
-  .section__title > h2 {
-    color: var(--done-color);
-  }
 }

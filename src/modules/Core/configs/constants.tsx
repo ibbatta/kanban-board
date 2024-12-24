@@ -1,6 +1,17 @@
-import { LevelType, StatusType } from "../utils/types";
+import { StatusType, PriorityMapType } from "$utils/types";
 
 export const STORAGE_DATA_NAME = "kanban-tasks";
+export const STORAGE_USER_NAME = "kanban-user";
+
+export const GOOGLE_AUTH_URI = (userToken: string) =>
+  `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userToken}&response_type="token"`;
+
+export const GOOGLE_AUTH_HEADER = (userToken: string) => {
+  return {
+    Authorization: `Bearer ${userToken}`,
+    Accept: "application/json",
+  };
+};
 
 export const STATUS: Record<StatusType, string> = {
   BACKLOG: "To Do",
@@ -8,10 +19,40 @@ export const STATUS: Record<StatusType, string> = {
   DONE: "Completed",
 };
 
-export const PRIORITY: Record<LevelType, string[]> = {
-  1: ["bg-red-600/70", "bg-red-100", "text-red-600/70", "High"],
-  2: ["bg-yellow-600/70", "bg-yellow-100", "text-yellow-600/70", "Medium"],
-  3: ["bg-green-600/70", "bg-green-100", "text-green-600/70", "Low"],
-  // 4: ["bg-blue-600/70", "bg-blue-100", "text-blue-600/70", "Ground"],
-  // 5: ["bg-gray-600/70", "bg-gray-100", "text-gray-600/70", "Normal"],
+export const DEFAULT_PRIORITY = 3;
+
+export const ICON_SIZES = {
+  sm: {
+    width: 16,
+    height: 16,
+  },
+  base: {
+    width: 24,
+    height: 24,
+  },
+  xl: {
+    width: 32,
+    height: 32,
+  },
+};
+
+export const PRIORITY: PriorityMapType = {
+  1: {
+    dotColor: "bg-red-800",
+    bgColor: "bg-red-100",
+    textColor: "text-red-800",
+    label: "High",
+  },
+  2: {
+    dotColor: "bg-yellow-800",
+    bgColor: "bg-yellow-100",
+    textColor: "text-yellow-800",
+    label: "Medium",
+  },
+  3: {
+    dotColor: "bg-green-800",
+    bgColor: "bg-green-100",
+    textColor: "text-green-800",
+    label: "Low",
+  },
 };
