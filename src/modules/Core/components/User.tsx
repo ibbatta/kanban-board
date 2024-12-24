@@ -13,7 +13,7 @@ import googleLogoSvg from "$assets/google-logo.svg";
 function User() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userToken, setUserToken] = useState<string | null>(null);
-  const [hasImgError, setHasImgError] = useState(false);
+  const [hasImgError, setHasImgError] = useState<boolean>(false);
 
   const { user, setUser, clearUser } = useUserStore();
 
@@ -26,10 +26,10 @@ function User() {
     onError: (error) => console.error("Login Failed:", error),
   });
 
-  const handleGoogleLogout = () => {
+  const handleGoogleLogout = useCallback(() => {
     googleLogout();
     clearUser();
-  };
+  }, [clearUser]);
 
   useEffect(() => {
     if (userToken && !user) {

@@ -33,6 +33,5 @@ createRoot(document.getElementById("app")!).render(
         <RouterProvider router={router} />
       </Suspense>
     </StrictMode>
-    ,
   </GoogleOAuthProvider>,
 );

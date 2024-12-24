@@ -4,7 +4,7 @@ export const STORAGE_DATA_NAME = "kanban-tasks";
 export const STORAGE_USER_NAME = "kanban-user";
 
 export const GOOGLE_AUTH_URI = (userToken: string) =>
-  `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userToken}`;
+  `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userToken}&response_type="token"`;
 
 export const GOOGLE_AUTH_HEADER = (userToken: string) => {
   return {
