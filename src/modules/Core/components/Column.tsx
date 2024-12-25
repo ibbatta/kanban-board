@@ -62,7 +62,9 @@ function Column({ columnId, title, columnTasks }: ColumnType) {
     setColumnActive(false);
 
     document.startViewTransition(() => {
-      if (isDataUpdated) updateAllTasks(cloneTasks);
+      if (isDataUpdated) {
+        updateAllTasks(cloneTasks);
+      }
     });
   };
 
